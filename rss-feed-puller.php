@@ -16,20 +16,48 @@ if ( ! is_wp_error( $rss ) ) : // Checks that the object is created correctly
  
 endif;
 ?>
- 
+ <style>
+    table{ 
+    border-collapse:separate; 
+    border-spacing: 0 20px; 
+    border-color: white;
+    } 
+    th,td{ 
+    width: 150px; 
+
+    }
+    td:first-child {
+    border-left-style: solid;
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
+}
+td:last-child {
+    border-right-style: solid;
+    border-bottom-right-radius: 10px; 
+    border-top-right-radius: 10px; 
+}
+
+
+
+</style>
 <ul>
     <?php if ( $maxitems == 0 ) : ?>
         <li><?php _e( 'No items', 'my-text-domain' ); ?></li>
     <?php else : ?>
         <?php // Loop through each feed item and display each item as a hyperlink. ?>
+        <table>
         <?php foreach ( $rss_items as $item ) : ?>
-            <li>
-                <a href="<?php echo esc_url( $item->get_permalink() ); ?>"
-                    title="<?php printf( __( 'Posted %s', 'my-text-domain' ), $item->get_date('j F Y | g:i a') ); ?>">
-                    <?php echo esc_html( $item->get_title() ); ?>
-                </a>
-                <?php echo esc_html($item->get_description() );?>
-            </li>
+            <tr>
+                <td>
+                    <a href="<?php echo esc_url( $item->get_permalink() ); ?>"
+                        title="<?php printf( __( 'Posted %s', 'my-text-domain' ), $item->get_date('j F Y | g:i a') ); ?>">
+                        <?php echo esc_html( $item->get_title() ); ?>
+                    </a>
+                    <p>Posted: <?php echo $item->get_date('j F Y | g:i a')?></p>
+                    <?php echo $item->get_description();?>
+                </td>
+        </tr>
         <?php endforeach; ?>
+        </table>
     <?php endif; ?>
 </ul>
